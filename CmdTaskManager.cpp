@@ -16,7 +16,6 @@ int main()
 
     while (true)
     {
-        ui.display_main_menu();
-        ui.handle_user_input();
+        ui.render();
     }
 }
