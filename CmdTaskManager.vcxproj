@@ -128,10 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CmdTaskManager.cpp" />
+    <ClCompile Include="Source\Pages\MainMenu.cpp" />
+    <ClCompile Include="Source\Pages\Page.cpp" />
     <ClCompile Include="Source\Task.cpp" />
     <ClCompile Include="Source\TaskManagerUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Pages\MainMenu.h" />
+    <ClInclude Include="Source\Pages\Page.h" />
     <ClInclude Include="Source\Task.h" />
     <ClInclude Include="Source\TaskManagerUI.h" />
   </ItemGroup>
