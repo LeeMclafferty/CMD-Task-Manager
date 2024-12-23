@@ -14,8 +14,8 @@ public:
 
 private:
 	//void handle_user_input();
-	page SelectPage(input_state state);
-	void display_page(page p);
+	std::shared_ptr<page> SelectPage(input_state state);
+	void display_page(std::shared_ptr<page> p);
 
 	input_state pState;
 	std::unordered_map<input_state, std::shared_ptr<page>> pages;

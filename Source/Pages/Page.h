@@ -17,7 +17,7 @@ public:
 	page();
 
 	inline std::string GetPageContent() const { return pageContent; }
-	virtual void handle_user_input() = 0; // left off implementing this for main_menu
+	virtual input_state handle_user_input();
 
 protected:
 	std::string pageContent;
