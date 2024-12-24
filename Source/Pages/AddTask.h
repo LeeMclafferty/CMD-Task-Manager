@@ -13,5 +13,8 @@ private:
 	std::string taskDesc;
 
 	std::string input_prompt();
+
+	void refresh();
+	void reset();
 };
 
