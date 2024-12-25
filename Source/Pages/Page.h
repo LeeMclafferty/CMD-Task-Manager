@@ -21,6 +21,5 @@ public:
 
 protected:
 	std::string pageContent;
-	std::string defaultString = "_________";
 };
 
