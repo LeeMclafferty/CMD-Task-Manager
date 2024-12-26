@@ -1,5 +1,9 @@
 #include "AddTask.h"
 #include <iostream>
+#include <fstream>
+#include "../json/json.hpp"
+using json = nlohmann::json;
+
 
 const std::string EXIT_OPTION = "4";
 const std::string DISCARD_OPTION = "5";
@@ -27,6 +31,7 @@ input_state add_task::handle_user_input()
 	}
 	else
 	{
+		save_to_json();
 		reset();
 	}
 
@@ -76,4 +81,47 @@ void add_task::reset()
 {
 	taskName = "";
 	taskDesc = "";
+}
+
+void add_task::save_to_json()
+{
+	json parsedData;
+	std::ifstream jsonFilestream("./task.json");
+
+	// Make sure the file opens with no errors and it exist. 
+	if (jsonFilestream.is_open()) {
+		try {
+			parsedData = json::parse(jsonFilestream);
+			if (!parsedData.is_array()) {
+				parsedData = json::array();
+			}
+		}
+		catch(const json::parse_error& error) {
+			std::cerr << "JSON Parse Error: " << error.what() << '\n';
+		}
+	}
+	else {
+		std::cout << "File not found, creating a new one.\n";
+		parsedData = json::array();
+	}
+	jsonFilestream.close();
+
+	// TODO: need to also write unique ID to file. 
+	// Create the new task.
+	json newTask = {
+		{"taskName", taskName},
+		{"taskDescription", taskDesc},
+		{"isComplete", false}
+	};
+	parsedData.push_back(newTask);
+
+	// Write to file
+	std::ofstream jsonOut("./tasks.json");
+	if (jsonOut.is_open()) {
+		jsonOut << parsedData.dump(4); // Pretty print, remove to decrease file size.
+		jsonOut.close();
+	}
+	else {
+		std::cerr << "Error: Could not open task.json for writing.\n";
+	}
 }

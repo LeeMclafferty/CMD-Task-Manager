@@ -16,5 +16,6 @@ private:
 
 	void refresh();
 	void reset();
+	void save_to_json();
 };
 
