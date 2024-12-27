@@ -1,7 +1,17 @@
-[
-    {
-        "isComplete": false,
-        "taskDescription": "Take him to the store to pick out a toy.",
-        "taskName": "Walk Dog"
-    }
-]
+{
+    "next_id": 3,
+    "tasks": [
+        {
+            "id": 1,
+            "isComplete": false,
+            "taskDescription": "Get all of the hard to reach places",
+            "taskName": "Dust"
+        },
+        {
+            "id": 2,
+            "isComplete": false,
+            "taskDescription": "Take him to the store to pick out a toy.",
+            "taskName": "Walk Dog"
+        }
+    ]
+}

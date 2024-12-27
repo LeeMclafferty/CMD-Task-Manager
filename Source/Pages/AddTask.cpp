@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "../json/json.hpp"
+
 using json = nlohmann::json;
 
 
@@ -86,14 +87,27 @@ void add_task::reset()
 void add_task::save_to_json()
 {
 	json parsedData;
-	std::ifstream jsonFilestream("./task.json");
+	int nextId = 1;
+	std::ifstream jsonFilestream("./tasks.json");
 
 	// Make sure the file opens with no errors and it exist. 
 	if (jsonFilestream.is_open()) {
 		try {
 			parsedData = json::parse(jsonFilestream);
-			if (!parsedData.is_array()) {
-				parsedData = json::array();
+			if (!parsedData.is_object()) {
+				parsedData = json::object();
+			}
+			// Validate next_id
+			if (parsedData.contains("next_id") && parsedData["next_id"].is_number_integer()) {
+				nextId = parsedData["next_id"];
+			}
+			else {
+				parsedData["next_id"] = nextId; // Initialize if missing
+			}
+
+			// Validate tasks
+			if (!parsedData.contains("tasks") || !parsedData["tasks"].is_array()) {
+				parsedData["tasks"] = json::array();
 			}
 		}
 		catch(const json::parse_error& error) {
@@ -102,22 +116,27 @@ void add_task::save_to_json()
 	}
 	else {
 		std::cout << "File not found, creating a new one.\n";
-		parsedData = json::array();
+		parsedData = {
+			{"next_id", nextId},
+			{"tasks", json::array()}
+		};
 	}
 	jsonFilestream.close();
 
-	// TODO: need to also write unique ID to file. 
 	// Create the new task.
 	json newTask = {
+		{"id", nextId},
 		{"taskName", taskName},
 		{"taskDescription", taskDesc},
 		{"isComplete", false}
 	};
-	parsedData.push_back(newTask);
+	parsedData["tasks"].push_back(newTask);
+	parsedData["next_id"] = ++nextId;
 
 	// Write to file
 	std::ofstream jsonOut("./tasks.json");
 	if (jsonOut.is_open()) {
+		std::cout << parsedData.dump(4) << std::endl;
 		jsonOut << parsedData.dump(4); // Pretty print, remove to decrease file size.
 		jsonOut.close();
 	}
