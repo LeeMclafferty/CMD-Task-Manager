@@ -30,5 +30,5 @@ std::shared_ptr<page> task_manager_UI::SelectPage(input_state state)
 
 void task_manager_UI::display_page(std::shared_ptr<page> p)
 {
-	std::cout << p->GetPageContent() << std::endl;
+	std::cout << p->get_page_content() << std::endl;
 }
