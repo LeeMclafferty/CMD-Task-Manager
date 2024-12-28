@@ -24,7 +24,7 @@ public:
 protected:
 	std::string pageContent;
 	std::vector<task> get_all_tasks();
-	void display_tasks();
+	std::string display_tasks();
 
 private:
 	std::vector<task> tasks;

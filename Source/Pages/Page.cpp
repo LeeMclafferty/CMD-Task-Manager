@@ -37,12 +37,18 @@ std::vector<class task> page::get_all_tasks()
 	return tasks;
 }
 
-void page::display_tasks()
+std::string page::display_tasks()
 {
+	std::stringstream ss;
 	get_all_tasks();
 
-	for (task t : tasks)
+	ss << "* Task List *\n\n";
+
+	for (const task& t : tasks)
 	{
-		std::cout << t << "\n";
+		ss << t << "\n"; 
 	}
+
+	return ss.str(); // Return the entire task list as a string
 }
+

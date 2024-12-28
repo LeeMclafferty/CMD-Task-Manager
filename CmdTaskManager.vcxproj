@@ -134,6 +134,7 @@
     <ClCompile Include="Source\Pages\Page.cpp" />
     <ClCompile Include="Source\Task.cpp" />
     <ClCompile Include="Source\TaskManagerUI.cpp" />
+    <ClCompile Include="Source\Pages\UpdateTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Pages\AddTask.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Source\Pages\Page.h" />
     <ClInclude Include="Source\Task.h" />
     <ClInclude Include="Source\TaskManagerUI.h" />
+    <ClInclude Include="Source\Pages\UpdateTask.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

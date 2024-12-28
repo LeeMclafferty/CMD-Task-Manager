@@ -6,14 +6,12 @@
 class task_manager_UI
 {
 
-
 public:
 	task_manager_UI();
 	void render();
 	inline input_state state() const { return pState; }
 
 private:
-	//void handle_user_input();
 	std::shared_ptr<page> SelectPage(input_state state);
 	void display_page(std::shared_ptr<page> p);
 
