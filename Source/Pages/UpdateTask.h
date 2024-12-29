@@ -1,5 +1,6 @@
 #pragma once
 #include "Page.h"
+#include "../Task.h"
 
 class update_task : public page
 {
@@ -9,6 +10,8 @@ public:
 
 private:
 	void set_page_content_select();
-	void set_page_content_form();
+	task get_exsisting_task(std::string s);
+
+	task selectedTask;
 };
 

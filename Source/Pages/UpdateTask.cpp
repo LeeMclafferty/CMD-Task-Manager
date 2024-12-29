@@ -1,12 +1,15 @@
 #include "UpdateTask.h"
 #include <iostream>
 #include <string>
+#include <cctype>
 
 const std::string EXIT_OPTION = "4";
 const std::string DISCARD_OPTION = "5";
 
 update_task::update_task()
+
 {
+    selectedTask = task();
     set_page_content_select();
 }
 
@@ -22,13 +25,11 @@ input_state update_task::handle_user_input()
     {
         return MAINMENU;
     }
-
-    for (task t : get_all_tasks())
-    {
-        if (t.name == input)
+    else {
+        selectedTask = get_exsisting_task(input);
+        if (selectedTask.name != "")
         {
-            // TODO: set task to edit.
-            // also want to standardize input to not be case sensitive with to lower.
+            return EDITING;
         }
     }
 
@@ -45,7 +46,22 @@ void update_task::set_page_content_select()
     )";
 }
 
-void update_task::set_page_content_form()
+task update_task::get_exsisting_task(std::string s)
 {
+    std::transform(s.begin(), s.end(), s.begin(),
+        [](unsigned char c) { return std::tolower(c); });
 
+	for (task t : get_all_tasks())
+	{
+		std::string lowerName = t.name;
+		std::transform(lowerName.begin(), lowerName.end(), lowerName.begin(),
+			[](unsigned char c) { return std::tolower(c); });
+
+		if (lowerName == s)
+		{
+            return t;
+		}
+	}
+
+    return task();
 }

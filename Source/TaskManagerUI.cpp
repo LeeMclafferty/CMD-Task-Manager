@@ -5,6 +5,7 @@
 #include "Pages/MainMenu.h"
 #include "Pages/AddTask.h"
 #include "Pages/UpdateTask.h"
+#include "Pages/EditingTask.h"
 
 task_manager_UI::task_manager_UI()
 	:pState(MAINMENU)
@@ -12,7 +13,8 @@ task_manager_UI::task_manager_UI()
 	pages.insert({
 	{ MAINMENU, std::make_shared<main_menu>() },
 	{ ADD, std::make_shared<add_task>() },
-	{UPDATE, std::make_shared<update_task>()}
+	{ UPDATE, std::make_shared<update_task>() },
+	{ EDITING, std::make_shared<editing_task>() },
 	});
 }
 

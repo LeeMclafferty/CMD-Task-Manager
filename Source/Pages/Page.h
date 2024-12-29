@@ -10,7 +10,8 @@ enum input_state
 	ADD,
 	UPDATE,
 	DELETE,
-	EXIT
+	EXIT,
+	EDITING
 };
 
 class page
