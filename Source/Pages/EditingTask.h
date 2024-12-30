@@ -5,8 +5,8 @@
 class editing_task : public page
 {
 public:
-	editing_task(task t);
-
+	editing_task();
+	inline void set_selected_task(task t) { t = selectedTask; }
 private:
 	task selectedTask;
 };

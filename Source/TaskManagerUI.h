@@ -3,16 +3,16 @@
 #include <unordered_map>
 #include <memory>
 
-class task_manager_UI
+class task_manager_UI : public std::enable_shared_from_this<task_manager_UI>
 {
 
 public:
 	task_manager_UI();
 	void render();
 	inline input_state state() const { return pState; }
+	std::shared_ptr<page> select_page(input_state state);
 
 private:
-	std::shared_ptr<page> SelectPage(input_state state);
 	void display_page(std::shared_ptr<page> p);
 
 	input_state pState;

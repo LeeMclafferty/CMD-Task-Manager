@@ -1,8 +1,6 @@
 #include "EditingTask.h"
 
-editing_task::editing_task(task t)
+editing_task::editing_task()
 {
-	selectedTask = t;
-
-	pageContent = "* Editing " + t.name + " *\n\n" + "4. Exit\n5. Save";
+	pageContent = "* Editing " + selectedTask.name + " *\n\n" + "4. Exit\n5. Save";
 }

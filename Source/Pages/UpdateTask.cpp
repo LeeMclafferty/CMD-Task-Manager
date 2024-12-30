@@ -29,6 +29,7 @@ input_state update_task::handle_user_input()
         selectedTask = get_exsisting_task(input);
         if (selectedTask.name != "")
         {
+            get_ui_mananger()->select_page(EDITING);
             return EDITING;
         }
     }

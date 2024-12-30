@@ -16,18 +16,23 @@ task_manager_UI::task_manager_UI()
 	{ UPDATE, std::make_shared<update_task>() },
 	{ EDITING, std::make_shared<editing_task>() },
 	});
+
+	for (auto& p : pages)
+	{
+		p.second->set_ui_manager(shared_from_this());
+	}
 }
 
 void task_manager_UI::render()
 {
 	system("cls");
 
-	std::shared_ptr<page> selectedPage = SelectPage(pState);
+	std::shared_ptr<page> selectedPage = select_page(pState);
 	display_page(selectedPage);
 	pState = selectedPage->handle_user_input();
 }
 
-std::shared_ptr<page> task_manager_UI::SelectPage(input_state state)
+std::shared_ptr<page> task_manager_UI::select_page(input_state state)
 {
 	return pages[state];
 }
