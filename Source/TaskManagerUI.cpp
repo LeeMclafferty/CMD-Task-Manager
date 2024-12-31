@@ -16,7 +16,10 @@ task_manager_UI::task_manager_UI()
 	{ UPDATE, std::make_shared<update_task>() },
 	{ EDITING, std::make_shared<editing_task>() },
 	});
+}
 
+void task_manager_UI::post_construct()
+{
 	for (auto& p : pages)
 	{
 		p.second->set_ui_manager(shared_from_this());

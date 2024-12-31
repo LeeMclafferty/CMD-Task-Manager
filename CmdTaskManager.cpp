@@ -8,14 +8,16 @@ clean, efficient code.
 */
 
 #include <iostream>
+#include<memory>
 #include "Source/TaskManagerUI.h"
 
 int main()
 {
-    task_manager_UI ui;
+    std::shared_ptr<task_manager_UI> ui = std::make_shared<task_manager_UI>();
+    ui->post_construct();
 
     while (true)
     {
-        ui.render();
+        ui->render();
     }
 }

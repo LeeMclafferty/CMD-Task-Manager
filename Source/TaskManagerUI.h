@@ -8,6 +8,7 @@ class task_manager_UI : public std::enable_shared_from_this<task_manager_UI>
 
 public:
 	task_manager_UI();
+	void post_construct();
 	void render();
 	inline input_state state() const { return pState; }
 	std::shared_ptr<page> select_page(input_state state);
