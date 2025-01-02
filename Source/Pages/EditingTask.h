@@ -6,11 +6,11 @@ class editing_task : public page
 {
 public:
 	editing_task();
-	inline void set_selected_task(const task& t) { selectedTask = t; }
+	void set_selected_task(const task& t);
 	input_state handle_user_input();
 
 private:
-	void set_page_content();
+	void update_page_content();
 	task selectedTask;
 };
 
