@@ -10,13 +10,17 @@ public:
 	input_state handle_user_input();
 
 private:
-	void select_page_content(std::string i);
-	void setup_page_dynamic_content();
+	std::string select_page_content(std::string i);
+	std::string main_menu_options(std::string i);
+	std::string update_name_options(std::string i);
+	void update_page_dynamic_content();
 	task selectedTask;
 
-	void setup_static_content();
 	std::string contentHeader;
 	std::string mainMenuOptions;
 	std::string updateNameContent;
+	std::string updateDescContent;
+	std::string completedContent;
+	std::string updateConfirmContent;
 };
 
