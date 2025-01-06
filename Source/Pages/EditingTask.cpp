@@ -36,16 +36,19 @@ input_state editing_task::handle_user_input()
 std::string editing_task::select_page_content(std::string i)
 {
 	if (pageContent == mainMenuOptions) {
-		return main_menu_options(i);
+		return handle_mainmenu_input(i);
 	}
 	if (pageContent == updateNameContent) {
-		return update_name_options(i);
+		return handle_name_input(i);
+	}
+	if (pageContent == updateDescContent) {
+		handle_description_input(i);
 	}
 
 	return mainMenuOptions;
 }
 
-std::string editing_task::main_menu_options(std::string i)
+std::string editing_task::handle_mainmenu_input(std::string i)
 {
 	if (i == NAME_OPTION) {
 		return updateNameContent;
@@ -54,6 +57,8 @@ std::string editing_task::main_menu_options(std::string i)
 		return updateDescContent;
 	}
 	else if (i == COMPLETE_OPTION) {
+		selectedTask.isComplete = selectedTask.isComplete ? false : true;
+		set_selected_task(selectedTask);
 		return completedContent;
 	}
 	else if (i == EXIT_OPTION)
@@ -69,7 +74,7 @@ std::string editing_task::main_menu_options(std::string i)
 	return mainMenuOptions;
 }
 
-std::string editing_task::update_name_options(std::string i)
+std::string editing_task::handle_name_input(std::string i)
 {
 	if (i == DISCARD_OPTION) {
 		return mainMenuOptions;
@@ -78,6 +83,19 @@ std::string editing_task::update_name_options(std::string i)
 	task buffer = selectedTask;
 	buffer.name = i;
 	set_selected_task(buffer);
+
+	return updateConfirmContent;
+}
+
+std::string editing_task::handle_description_input(std::string i)
+{
+	if (i == DISCARD_OPTION) {
+		return mainMenuOptions;
+	}
+
+	task buffer = selectedTask;
+	buffer.description = i;
+
 	return updateConfirmContent;
 }
 
@@ -85,10 +103,11 @@ void editing_task::update_page_dynamic_content()
 {
 	contentHeader = "* Editing " + selectedTask.name + " *\n\n Description: " + 
 		selectedTask.description + "\n Completed: " + (selectedTask.isComplete ? "Yes" : "No") + "\n\n";
-	mainMenuOptions = contentHeader + "\n1. Update Name \n2. Update Description \n3. Mark as Complete \n4. Exit\n5. Save";
+	mainMenuOptions = contentHeader + "\n1. Update Name \n2. Update Description" "\n3. Mark task as "
+		+ (selectedTask.isComplete ? "incomplete" :  "complete") +"\n 4.Exit\n 5.Save";
 	updateNameContent = contentHeader + "\nb. back\n\nEnter the task's new name: ";
 	updateDescContent = contentHeader + "\nb. back\n\nEnter the task's new description: ";
-	completedContent = "\n" + selectedTask.name + " was marked as complete! Press enter to continue...";
+	completedContent = "\n" + selectedTask.name + " was marked as " + (selectedTask.isComplete ? "complete" :  "incomplete") + "! Press enter to continue...";
 	updateConfirmContent = "\n" + selectedTask.name + " was updated! Press enter to continue...";
 
 	pageContent = mainMenuOptions;

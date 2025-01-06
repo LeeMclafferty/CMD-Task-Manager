@@ -11,8 +11,10 @@ public:
 
 private:
 	std::string select_page_content(std::string i);
-	std::string main_menu_options(std::string i);
-	std::string update_name_options(std::string i);
+	std::string handle_mainmenu_input(std::string i);
+	std::string handle_name_input(std::string i);
+	std::string handle_description_input(std::string i);
+
 	void update_page_dynamic_content();
 	task selectedTask;
 
