@@ -31,7 +31,7 @@ protected:
 	std::vector<task> get_all_tasks();
 	std::string display_tasks();
 
-	void save_to_json(task t);
+	void save_to_json(task t, std::string filePath);
 
 private:
 	std::vector<task> tasks;

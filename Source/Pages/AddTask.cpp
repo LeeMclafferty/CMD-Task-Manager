@@ -10,11 +10,16 @@ const std::string EXIT_OPTION = "4";
 const std::string DISCARD_OPTION = "5";
 
 add_task::add_task()
-	:taskName(""), taskDesc("")
+	:newTask(task())
 {
 	refresh();
 }
 
+/*
+* left off here, I need to change this to set the id correctly before saving,
+* I need to think about this, since it probably could be done in one of the save
+* steps. 
+*/
 input_state add_task::handle_user_input()
 {
 	std::string input;
@@ -22,17 +27,17 @@ input_state add_task::handle_user_input()
 	std::cout << input_prompt();
 	std::getline(std::cin, input);
 
-	if (taskName == "")
+	if (newTask.name == "")
 	{
-		taskName = input;
+		newTask.name = input;
 	}
-	else if (taskName != "" && taskDesc == "")
+	else if (newTask.name != "" && newTask.description == "")
 	{
-		taskDesc = input;
+		newTask.description = input;
 	}
 	else
 	{
-		save_to_json();
+		save_to_json(); // need to finish this call when i work out the ID issue. 
 		reset();
 	}
 
@@ -82,65 +87,4 @@ void add_task::reset()
 {
 	taskName = "";
 	taskDesc = "";
-}
-
-void add_task::save_to_json()
-{
-	json parsedData;
-	int nextId = 1;
-	std::ifstream jsonFilestream("./tasks.json");
-
-	// Make sure the file opens with no errors and it exist. 
-	if (jsonFilestream.is_open()) {
-		try {
-			parsedData = json::parse(jsonFilestream);
-			if (!parsedData.is_object()) {
-				parsedData = json::object();
-			}
-			// Validate next_id
-			if (parsedData.contains("next_id") && parsedData["next_id"].is_number_integer()) {
-				nextId = parsedData["next_id"];
-			}
-			else {
-				parsedData["next_id"] = nextId; // Initialize if missing
-			}
-
-			// Validate tasks
-			if (!parsedData.contains("tasks") || !parsedData["tasks"].is_array()) {
-				parsedData["tasks"] = json::array();
-			}
-		}
-		catch(const json::parse_error& error) {
-			std::cerr << "JSON Parse Error: " << error.what() << '\n';
-		}
-	}
-	else {
-		std::cout << "File not found, creating a new one.\n";
-		parsedData = {
-			{"next_id", nextId},
-			{"tasks", json::array()}
-		};
-	}
-	jsonFilestream.close();
-
-	// Create the new task.
-	json newTask = {
-		{"id", nextId},
-		{"taskName", taskName},
-		{"taskDescription", taskDesc},
-		{"isComplete", false}
-	};
-	parsedData["tasks"].push_back(newTask);
-	parsedData["next_id"] = ++nextId;
-
-	// Write to file
-	std::ofstream jsonOut("./tasks.json");
-	if (jsonOut.is_open()) {
-		std::cout << parsedData.dump(4) << std::endl;
-		jsonOut << parsedData.dump(4); // Pretty print, remove to decrease file size.
-		jsonOut.close();
-	}
-	else {
-		std::cerr << "Error: Could not open task.json for writing.\n";
-	}
 }

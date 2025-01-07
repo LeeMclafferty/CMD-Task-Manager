@@ -10,13 +10,11 @@ public:
 	virtual input_state handle_user_input() override;
 
 private:
-	std::string taskName;
-	std::string taskDesc;
+	task newTask;
 
 	std::string input_prompt();
 
 	void refresh();
 	void reset();
-	void save_to_json();
 };
 

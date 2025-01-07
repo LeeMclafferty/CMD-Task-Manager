@@ -51,84 +51,96 @@ std::string page::display_tasks()
 	return ss.str(); // Return the entire task list as a string
 }
 
-void page::save_to_json(task t)
+// "./tasks.json"
+void page::save_to_json(task t, std::string filePath)
+{
+	json file = read_and_validate_json(filePath);
+	file = validate_json_strcuture(file);
+	file = add_task_to_json(file, t);
+	write_json_to_file(filePath, file);
+}
+
+nlohmann::json page::read_and_validate_json(std::string filePath)
 {
 	json parsedData;
-	int nextId = 1;
 	std::ifstream jsonFilestream("./tasks.json");
 
 	// Make sure the file opens with no errors and it exist. 
 	if (jsonFilestream.is_open()) {
 		try {
 			parsedData = json::parse(jsonFilestream);
-			if (!parsedData.is_object()) {
-				parsedData = json::object();
-			}
-			// Validate next_id
-			if (parsedData.contains("next_id") && parsedData["next_id"].is_number_integer()) {
-				nextId = parsedData["next_id"];
-			}
-			else {
-				parsedData["next_id"] = nextId; // Initialize if missing
-			}
-
-			// Validate tasks
-			if (!parsedData.contains("tasks") || !parsedData["tasks"].is_array()) {
-				parsedData["tasks"] = json::array();
-			}
 		}
 		catch (const json::parse_error& error) {
 			std::cerr << "JSON Parse Error: " << error.what() << '\n';
 		}
 	}
 	else {
-		std::cout << "File not found, creating a new one.\n";
-		parsedData = {
-			{"next_id", nextId},
-			{"tasks", json::array()}
-		};
+		std::cout << "File not found." << filePath << "\n";
+		return json::object();
 	}
 	jsonFilestream.close();
+
+	return parsedData;
+}
+
+nlohmann::json page::validate_json_strcuture(nlohmann::json parsedJson)
+{
+	if (!parsedJson.is_object()) {
+		parsedJson = json::object();
+	}
+	
+	// Validate next_id
+	if (!parsedJson.contains("next_id") || !parsedJson["next_id"].is_number_integer()) {
+		parsedJson["next_id"] = 1; // Initialize if missing
+	}
+
+	// Validate tasks
+	if (!parsedJson.contains("tasks") || !parsedJson["tasks"].is_array()) {
+		parsedJson["tasks"] = json::array(); // Set to empty array if tasks not found
+	}
+
+	return parsedJson;
+}
+
+nlohmann::json page::add_task_to_json(nlohmann::json file, task t)
+{
+	int nextId = file["next_id"];
+	auto tasks = file["tasks"];
+
+	// If the task exist, then update it instead. 
+	for (auto& i : tasks) {
+		if (t.id == i["id"]) {
+			i["taskName"] = t.name;
+			i["taskDescription"] = t.description;
+			i["isComplete"] = t.isComplete;
+
+			return file;
+		}
+	}
 
 	// Create the new task.
 	json newTask = {
 		{"id", nextId},
 		{"taskName", t.name},
 		{"taskDescription", t.description},
-		{"isComplete", false}
+		{"isComplete", t.isComplete}
 	};
-	parsedData["tasks"].push_back(newTask);
-	parsedData["next_id"] = ++nextId;
+	file["tasks"].push_back(newTask);
+	file["next_id"] = ++nextId;
 
-	// Write to file
-	std::ofstream jsonOut("./tasks.json");
+	return file;
+}
+
+void page::write_json_to_file(std::string filePath, nlohmann::json file)
+{
+	std::ofstream jsonOut(filePath);
 	if (jsonOut.is_open()) {
-		std::cout << parsedData.dump(4) << std::endl;
-		jsonOut << parsedData.dump(4); // Pretty print, remove to decrease file size.
+		std::cout << file.dump(4) << std::endl;
+		jsonOut << file.dump(4); // Pretty print, remove to decrease file size.
 		jsonOut.close();
 	}
 	else {
 		std::cerr << "Error: Could not open task.json for writing.\n";
 	}
-}
-
-nlohmann::json page::read_and_validate_json(std::string filePath)
-{
-	return json();
-}
-
-nlohmann::json page::validate_json_strcuture(nlohmann::json parstedJson)
-{
-	return json();
-}
-
-nlohmann::json page::add_task_to_json(nlohmann::json file, task t)
-{
-
-}
-
-void page::write_json_to_file(std::string filePath, nlohmann::json file)
-{
-
 }
 
