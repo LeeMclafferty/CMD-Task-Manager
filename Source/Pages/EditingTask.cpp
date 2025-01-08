@@ -104,7 +104,7 @@ void editing_task::update_page_dynamic_content()
 	contentHeader = "* Editing " + selectedTask.name + " *\n\n Description: " + 
 		selectedTask.description + "\n Completed: " + (selectedTask.isComplete ? "Yes" : "No") + "\n\n";
 	mainMenuOptions = contentHeader + "\n1. Update Name \n2. Update Description" "\n3. Mark task as "
-		+ (selectedTask.isComplete ? "incomplete" :  "complete") +"\n 4.Exit\n 5.Save";
+		+ (selectedTask.isComplete ? "incomplete" :  "complete") +"\n4. Exit\n5. Save";
 	updateNameContent = contentHeader + "\nb. back\n\nEnter the task's new name: ";
 	updateDescContent = contentHeader + "\nb. back\n\nEnter the task's new description: ";
 	completedContent = "\n" + selectedTask.name + " was marked as " + (selectedTask.isComplete ? "complete" :  "incomplete") + "! Press enter to continue...";

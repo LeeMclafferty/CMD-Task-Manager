@@ -15,11 +15,6 @@ add_task::add_task()
 	refresh();
 }
 
-/*
-* left off here, I need to change this to set the id correctly before saving,
-* I need to think about this, since it probably could be done in one of the save
-* steps. 
-*/
 input_state add_task::handle_user_input()
 {
 	std::string input;
@@ -37,7 +32,7 @@ input_state add_task::handle_user_input()
 	}
 	else
 	{
-		save_to_json(); // need to finish this call when i work out the ID issue. 
+		save_to_json(newTask, "./tasks.json");
 		reset();
 	}
 
@@ -58,16 +53,16 @@ input_state add_task::handle_user_input()
 
 std::string add_task::input_prompt()
 {
-	if (taskName == "")
+	if (newTask.name == "")
 	{
 		return "Enter the task's name: ";
 	}
-	else if (taskDesc == "")
+	else if (newTask.description == "")
 	{
 		return "Enter the task's description: ";
 	}
 
-	return taskName + ", was added. Press any button to add another task: ";
+	return newTask.name + ", was added. Press any button to add another task: ";
 }
 
 void add_task::refresh()
@@ -75,8 +70,8 @@ void add_task::refresh()
 	pageContent = R"(
         * Add A New Task *
         
-        Task Name: )" + taskName + R"(
-        Task Description: )" + taskDesc + R"(
+        Task Name: )" + newTask.name + R"(
+        Task Description: )" + newTask.description + R"(
         
         4. Exit
 	5. Discard
@@ -85,6 +80,6 @@ void add_task::refresh()
 
 void add_task::reset()
 {
-	taskName = "";
-	taskDesc = "";
+	newTask.name = "";
+	newTask.description = "";
 }

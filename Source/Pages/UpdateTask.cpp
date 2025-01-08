@@ -18,6 +18,7 @@ update_task::update_task()
 
 input_state update_task::handle_user_input()
 {
+    set_page_content_select();
     std::string input;
 
     std::cout << "Enter a Task's name to edit: ";

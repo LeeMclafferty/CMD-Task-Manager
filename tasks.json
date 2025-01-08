@@ -1,5 +1,5 @@
 {
-    "next_id": 3,
+    "next_id": 4,
     "tasks": [
         {
             "id": 1,
@@ -12,6 +12,12 @@
             "isComplete": false,
             "taskDescription": "Take him to the store to pick out a toy.",
             "taskName": "Walk Dog"
+        },
+        {
+            "id": 3,
+            "isComplete": false,
+            "taskDescription": "Kitchen, bedroom, and bathroom.",
+            "taskName": "Trash"
         }
     ]
 }
