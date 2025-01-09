@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Pages\DeleteTask.cpp" />
     <ClCompile Include="Source\Pages\EditingTask.cpp" />
     <ClCompile Include="Source\Pages\AddTask.cpp" />
     <ClCompile Include="CmdTaskManager.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="Source\Pages\UpdateTask.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Pages\DeleteTask.h" />
     <ClInclude Include="Source\Pages\EditingTask.h" />
     <ClInclude Include="Source\Pages\AddTask.h" />
     <ClInclude Include="Source\Pages\MainMenu.h" />

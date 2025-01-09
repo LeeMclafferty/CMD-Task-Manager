@@ -6,6 +6,7 @@
 #include "Pages/AddTask.h"
 #include "Pages/UpdateTask.h"
 #include "Pages/EditingTask.h"
+#include "Pages/DeleteTask.h"
 
 task_manager_UI::task_manager_UI()
 	:pState(MAINMENU)
@@ -15,6 +16,7 @@ task_manager_UI::task_manager_UI()
 	{ ADD, std::make_shared<add_task>() },
 	{ UPDATE, std::make_shared<update_task>() },
 	{ EDITING, std::make_shared<editing_task>() },
+	{ DELETE, std::make_shared<delete_task>() }
 	});
 }
 
