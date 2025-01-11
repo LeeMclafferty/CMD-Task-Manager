@@ -3,18 +3,20 @@
 
 delete_task::delete_task()
 {
-	pageContent = "* Delete Task* ";
+	update_page_content();
 }
 
 input_state delete_task::handle_user_input()
 {
 	std::string input;
-	std::cin >> input;
+	std::cout << "Enter the name of the task you want to delete: ";
+	getline(std::cin, input);
 
-	return MAINMENU;
+	return DELETE;
 }
 
 void delete_task::update_page_content()
 {
-	pageContent = "* Delete Task *\n\n" + display_tasks();
+	pageHeader = "* Delete Task *\n\n" + display_tasks();
+	pageContent = pageHeader;
 }

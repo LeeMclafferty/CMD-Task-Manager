@@ -60,6 +60,11 @@ void page::save_to_json(task t, std::string filePath)
 	write_json_to_file(filePath, file);
 }
 
+task page::get_task_from_json()
+{
+	// lookup task from json, create task object and return it.
+}
+
 nlohmann::json page::read_and_validate_json(std::string filePath)
 {
 	json parsedData;

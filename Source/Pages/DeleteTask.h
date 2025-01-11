@@ -11,5 +11,8 @@ protected:
 
 private:
 	void update_page_content();
+
+	std::string pageHeader;
+	task selectedTask;
 };
 
