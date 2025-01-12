@@ -36,14 +36,14 @@ protected:
 
 	nlohmann::json read_and_validate_json(std::string filePath);
 	nlohmann::json validate_json_strcuture(nlohmann::json parstedJson);
+	nlohmann::json add_task_to_json(nlohmann::json file, task t);
+	void write_json_to_file(std::string filePath, nlohmann::json file);
+	void save_to_json(task t);
 
 private:
 	std::vector<task> tasks;
 	std::weak_ptr<class task_manager_UI> ui_manager;
 
-	nlohmann::json add_task_to_json(nlohmann::json file, task t);
-	void write_json_to_file(std::string filePath, nlohmann::json file);
-	void save_to_json(task t);
 
 };
 

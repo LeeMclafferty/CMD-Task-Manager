@@ -155,7 +155,7 @@ void page::write_json_to_file(std::string filePath, nlohmann::json file)
 {
 	std::ofstream jsonOut(filePath);
 	if (jsonOut.is_open()) {
-		std::cout << file.dump(4) << std::endl;
+		//std::cout << file.dump(4) << std::endl;
 		jsonOut << file.dump(4); // Pretty print, remove to decrease file size.
 		jsonOut.close();
 	}
