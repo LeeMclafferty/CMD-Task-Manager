@@ -60,9 +60,24 @@ void page::save_to_json(task t, std::string filePath)
 	write_json_to_file(filePath, file);
 }
 
-task page::get_task_from_json()
+task page::get_task_by_name(std::string name)
 {
-	// lookup task from json, create task object and return it.
+	std::transform(name.begin(), name.end(), name.begin(),
+		[](unsigned char c) { return std::tolower(c); });
+
+	for (task t : get_all_tasks())
+	{
+		std::string lowerName = t.name;
+		std::transform(lowerName.begin(), lowerName.end(), lowerName.begin(),
+			[](unsigned char c) { return std::tolower(c); });
+
+		if (lowerName == name)
+		{
+			return t;
+		}
+	}
+
+	return task();
 }
 
 nlohmann::json page::read_and_validate_json(std::string filePath)

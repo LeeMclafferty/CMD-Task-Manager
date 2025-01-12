@@ -10,7 +10,6 @@ public:
 
 private:
 	void set_page_content_select();
-	task get_exsisting_task(std::string s);
 
 	task selectedTask;
 };

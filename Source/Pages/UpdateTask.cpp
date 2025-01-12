@@ -29,7 +29,7 @@ input_state update_task::handle_user_input()
         return MAINMENU;
     }
     else {
-        selectedTask = get_exsisting_task(input);
+        selectedTask = get_task_by_name(input);
         if (selectedTask.name != "")
         {
             auto uiManager = get_ui_mananger().lock();
@@ -59,24 +59,4 @@ void update_task::set_page_content_select()
         ------------------------------
         4. Exit
     )";
-}
-
-task update_task::get_exsisting_task(std::string s)
-{
-    std::transform(s.begin(), s.end(), s.begin(),
-        [](unsigned char c) { return std::tolower(c); });
-
-	for (task t : get_all_tasks())
-	{
-		std::string lowerName = t.name;
-		std::transform(lowerName.begin(), lowerName.end(), lowerName.begin(),
-			[](unsigned char c) { return std::tolower(c); });
-
-		if (lowerName == s)
-		{
-            return t;
-		}
-	}
-
-    return task();
 }
