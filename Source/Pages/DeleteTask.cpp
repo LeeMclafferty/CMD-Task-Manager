@@ -29,16 +29,19 @@ input_state delete_task::handle_user_input()
 		return DELETE;
 	}
 
-	handle_confirm(confirm);
-	bool success = delete_task_from_file(selectedTask, "./tasks.json");
+	bool confirmed = handle_confirm(confirm);
 
-	if (success) {
-		std::cout << selectedTask.name + " was deleted!";
-		std::cin >> confirm;
-	}
-	else {
-		std::cout << selectedTask.name + " could not be deleted...";
-		std::cin >> confirm;
+	if (confirmed) {
+		bool success = delete_task_from_file(selectedTask, "./tasks.json");
+
+		if (success) {
+			std::cout << selectedTask.name + " was deleted!";
+			std::cin >> confirm;
+		}
+		else {
+			std::cout << selectedTask.name + " could not be deleted...";
+			std::cin >> confirm;
+		}
 	}
 
 	return DELETE;
@@ -46,9 +49,7 @@ input_state delete_task::handle_user_input()
 
 void delete_task::update_page_content()
 {
-	pageHeader = "* Delete Task *\n\n" + display_tasks() + "4. Exit\n\n";
-	pageContent = pageHeader;
-
+	pageContent = "* Delete Task *\n\n" + display_tasks() + "4. Exit\n\n";
 }
 
 bool delete_task::delete_task_from_file(task t, std::string filePath)
@@ -68,7 +69,7 @@ bool delete_task::delete_task_from_file(task t, std::string filePath)
 
 }
 
-void delete_task::handle_confirm(std::string& s)
+bool delete_task::handle_confirm(std::string& s)
 {
 	std::cout << "Are you sure you want to delete " + selectedTask.name + ", This cannot be undone (Y/N): ";
 
@@ -79,9 +80,11 @@ void delete_task::handle_confirm(std::string& s)
 
 	while ((s != "y") && (s != "yes")) {
 		if (s == "EXIT_OPTION" || s == "n" || s == "no") {
-			break;
+			return false;
 		}
 		std::cout << "Invalid Input, try again...\nAre you sure you want to delete " + selectedTask.name + ", This cannot be undone (Y/N): ";
 		getline(std::cin, s);
 	}
+
+	return true;
 }
