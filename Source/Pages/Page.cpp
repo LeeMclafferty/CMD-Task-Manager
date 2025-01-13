@@ -1,6 +1,7 @@
 #include "Page.h"
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 using json = nlohmann::json;
 
